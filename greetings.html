@@ -1,42 +1,41 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Greetings</title>
+    <title>Relógio Dinâmico</title>
 
     <style>
-
-
-        body{
+        body {
             font-variant-caps: all-petite-caps;
-
-
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: transparent; /* Fundo transparente para se integrar ao Notion */
         }
 
         .widget {
-            padding: 5px 5px ;
-            color: #000000;
+            padding: 5px 5px;
             display: flex;
-            justify-content:center;
-            align-items:center;
+            justify-content: center;
+            align-items: center;
             flex-direction: column;
             max-width: 95%;
             margin: auto;
-            border: 3px solid #000000;
+            border: 3px solid;
             border-radius: 5px;
-            box-shadow: 2px 2px 1px 0px #000000;
-
+            box-shadow: 2px 2px 1px 0px;
+            background-color: transparent; /* Fundo transparente */
         }
 
-           
-        .greet{
+        .greet {
             font-size: 3em;
         }
 
         .date {
-      
             font-family: monospace;
             font-size: 3em;
         }
@@ -55,99 +54,105 @@
             font-size: 1em;
             display: inline-block;
         }
-
-     
-
-
-
-
     </style>
 </head>
 <body>
 
-
-
-
-<div class="container>">
-    <div class="widget">
-
-            <div class="greet" id="greet"></div>
-
-                <div class="date" id="date"></div>
-                <div class="clock">
-                    <div class="time" id="hour"></div>
-                    <div class="colon">:</div>
-                    <div class="time" id="min"></div>
-                    <div class="colon">:</div>
-                    <div class="time" id="sec"></div>
-                </div>
-           
-
-        
-
+<div class="widget" id="widget">
+    <div class="greet" id="greet"></div>
+    <div class="date" id="date"></div>
+    <div class="clock">
+        <div class="time" id="hour"></div>
+        <div class="colon">:</div>
+        <div class="time" id="min"></div>
+        <div class="colon">:</div>
+        <div class="time" id="sec"></div>
     </div>
 </div>
-        
-
-
 
 <script>
+    // Função para atualizar o tema do widget
+    function updateTheme() {
+        const widget = document.getElementById('widget');
+        const bgColor = window.getComputedStyle(document.body).backgroundColor;
 
-function dispalyGreetings(today){
-        hrs = today.getHours();
-        name="Fernanda"
-        if (hrs < 12)
-            greet = 'Bom dia  '+name;
-        else if (hrs >= 12 && hrs <= 17)
-            greet = 'Boa tarde '+name;
-        else if (hrs >= 17 && hrs <= 24)
-            greet = 'Boa noite  '+name;
-        document.getElementById('greet').innerHTML = greet;
-
+        // Verifica se o tema é escuro (fundo #191919 ou rgb(25, 25, 25))
+        if (bgColor === "rgb(25, 25, 25)" || bgColor === "#191919") {
+            widget.style.color = "#ffffff"; // Texto branco
+            widget.style.borderColor = "#ffffff"; // Borda branca
+            widget.style.boxShadow = "2px 2px 1px 0px #ffffff"; // Sombra branca
+        } else {
+            widget.style.color = "#000000"; // Texto preto
+            widget.style.borderColor = "#000000"; // Borda preta
+            widget.style.boxShadow = "2px 2px 1px 0px #000000"; // Sombra preta
+        }
     }
 
-    function dispalyDate(today) {  
-       
+    // Função para exibir a saudação
+    function displayGreetings(today) {
+        const hrs = today.getHours();
+        const name = "Fernanda";
+        let greet;
+        if (hrs < 12) {
+            greet = 'Bom dia, ' + name;
+        } else if (hrs >= 12 && hrs <= 17) {
+            greet = 'Boa tarde, ' + name;
+        } else {
+            greet = 'Boa noite, ' + name;
+        }
+        document.getElementById('greet').innerHTML = greet;
+    }
+
+    // Função para exibir a data
+    function displayDate(today) {
         const days = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
         const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
-  "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
-];
+            "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+        ];
 
-        var dayName = days[today.getDay()];
-        var monthName = monthNames[today.getMonth()];
-        var date = today.getDate();
-        var year = today.getFullYear();
-        document.getElementById('date').innerHTML =dayName+", "+monthName+" "+date+" "+year;
-
+        const dayName = days[today.getDay()];
+        const monthName = monthNames[today.getMonth()];
+        const date = today.getDate();
+        const year = today.getFullYear();
+        document.getElementById('date').innerHTML = `${dayName}, ${date} de ${monthName} de ${year}`;
     }
 
-
-    function dispalyClock(today) {
-
-     const hour = padZeros(today.getHours()); // Formato 24h
+    // Função para exibir o relógio (formato 24h)
+    function displayClock(today) {
+        const hour = padZeros(today.getHours()); // Formato 24h
         const minutes = padZeros(today.getMinutes());
         const seconds = padZeros(today.getSeconds());
-       
+
         document.getElementById('hour').innerHTML = hour;
         document.getElementById('min').innerHTML = minutes;
         document.getElementById('sec').innerHTML = seconds;
-  }
+    }
 
     // Função para adicionar zero à esquerda
     function padZeros(num) {
         return num < 10 ? `0${num}` : num;
     }
 
-    function dispalyWidget() {
-        var today = new Date();
-        dispalyGreetings(today);
-        dispalyDate(today);
-        dispalyClock(today);
-        setTimeout(dispalyWidget, 500);
+    // Função principal para atualizar o widget
+    function updateWidget() {
+        const today = new Date();
+        displayGreetings(today);
+        displayDate(today);
+        displayClock(today);
+        setTimeout(updateWidget, 500); // Atualiza a cada 500ms
     }
 
-    dispalyWidget()
+    // Observar mudanças no tema do Notion
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['style']
+    });
 
+    // Inicializar
+    updateTheme(); // Aplicar o tema inicial
+    updateWidget(); // Iniciar o relógio
 </script>
 
 </body>
+</html>
