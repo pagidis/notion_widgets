@@ -148,7 +148,11 @@
 
     function updateTheme() {
         let widget = document.getElementById('widget');
-        if (document.body.classList.contains('dark')) {
+        // Verifica a cor de fundo do body para determinar o tema
+        let bgColor = window.getComputedStyle(document.body).backgroundColor;
+
+        // Se o fundo for escuro, assume que o tema é escuro
+        if (bgColor === "rgb(25, 25, 25)" || bgColor === "rgb(32, 32, 32)" || bgColor === "rgb(0, 0, 0)") {
             widget.classList.remove('light');
             widget.classList.add('dark');
         } else {
@@ -157,11 +161,11 @@
         }
     }
 
-    // Observar mudanças no tema do Notion
+    // Observar mudanças no estilo do body
     const observer = new MutationObserver(updateTheme);
     observer.observe(document.body, {
         attributes: true,
-        attributeFilter: ['class']
+        attributeFilter: ['style']
     });
 
     // Inicializar o tema
