@@ -18,32 +18,32 @@
         }
 
         .widget {
-            padding: 20px;
+            padding: 5px 5px;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
+            max-width: 95%;
+            margin: auto;
             border: 3px solid;
-            border-radius: 10px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            box-shadow: 2px 2px 1px 0px;
             background-color: transparent; /* Fundo transparente */
         }
 
         .greet {
-            font-size: 2.5em;
+            font-size: 3em;
             font-weight: bold;
         }
 
         .date {
             font-family: monospace;
-            font-size: 1.5em;
-            margin-top: 10px;
+            font-size: 3em;
         }
 
         .clock {
             font-family: monospace;
-            font-size: 2.5em;
-            margin-top: 10px;
+            font-size: 3em;
         }
 
         .time {
@@ -77,13 +77,15 @@
         const widget = document.getElementById('widget');
         const bgColor = window.getComputedStyle(document.body).backgroundColor;
 
-        // Verifica se o tema é escuro (fundo preto ou escuro)
-        if (bgColor === "rgb(25, 25, 25)" || bgColor === "rgb(32, 32, 32)" || bgColor === "rgb(0, 0, 0)") {
+        // Verifica se o tema é escuro (fundo #191919 ou rgb(25, 25, 25))
+        if (bgColor === "rgb(25, 25, 25)" || bgColor === "#191919") {
             widget.style.color = "#ffffff"; // Texto branco
             widget.style.borderColor = "#ffffff"; // Borda branca
+            widget.style.boxShadow = "2px 2px 1px 0px #ffffff"; // Sombra branca
         } else {
             widget.style.color = "#000000"; // Texto preto
             widget.style.borderColor = "#000000"; // Borda preta
+            widget.style.boxShadow = "2px 2px 1px 0px #000000"; // Sombra preta
         }
     }
 
