@@ -18,27 +18,30 @@
         }
 
         .widget {
-            padding: 5px 5px;
+            padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            max-width: 95%;
-            margin: auto;
+            width: 100%; /* Largura total da página */
+            height: auto; /* Altura automática */
+            min-height: 200px; /* Altura mínima */
             border: 3px solid;
-            border-radius: 5px;
-            box-shadow: 2px 2px 1px 0px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
             background-color: transparent; /* Fundo transparente */
         }
 
         .greet {
             font-size: 3em;
             font-weight: bold;
+            margin-bottom: 10px;
         }
 
         .date {
             font-family: monospace;
-            font-size: 3em;
+            font-size: 2em;
+            margin-bottom: 10px;
         }
 
         .clock {
@@ -81,11 +84,11 @@
         if (bgColor === "rgb(25, 25, 25)" || bgColor === "#191919") {
             widget.style.color = "#ffffff"; // Texto branco
             widget.style.borderColor = "#ffffff"; // Borda branca
-            widget.style.boxShadow = "2px 2px 1px 0px #ffffff"; // Sombra branca
+            widget.style.boxShadow = "2px 2px 10px rgba(255, 255, 255, 0.1)"; // Sombra branca
         } else {
             widget.style.color = "#000000"; // Texto preto
             widget.style.borderColor = "#000000"; // Borda preta
-            widget.style.boxShadow = "2px 2px 1px 0px #000000"; // Sombra preta
+            widget.style.boxShadow = "2px 2px 10px rgba(0, 0, 0, 0.1)"; // Sombra preta
         }
     }
 
@@ -118,23 +121,15 @@
         document.getElementById('date').innerHTML = `${dayName}, ${date} de ${monthName} de ${year}`;
     }
 
-    // Função para exibir o relógio
+    // Função para exibir o relógio (formato 24h)
     function displayClock(today) {
-        const hour = padZeros(twelveHour(today.getHours()));
+        const hour = padZeros(today.getHours()); // Formato 24h
         const minutes = padZeros(today.getMinutes());
         const seconds = padZeros(today.getSeconds());
 
-        const ampm = today.getHours() >= 12 ? "PM" : "AM";
         document.getElementById('hour').innerHTML = hour;
         document.getElementById('min').innerHTML = minutes;
-        document.getElementById('sec').innerHTML = `${seconds} ${ampm}`;
-    }
-
-    // Função para converter horas para formato 12h
-    function twelveHour(hour) {
-        if (hour > 12) return hour - 12;
-        if (hour === 0) return 12;
-        return hour;
+        document.getElementById('sec').innerHTML = seconds;
     }
 
     // Função para adicionar zero à esquerda
